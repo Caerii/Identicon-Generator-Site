@@ -136,7 +136,7 @@ const MainContent: React.FC<MainContentProps> = ({
             <ChromaticAberration offset={new Vector2(0.005, 0.0015)} radialModulation={false} modulationOffset={0.0} />
             <ambientLight intensity={3.5} />
             <pointLight position={[10, 10, 10]} />
-            {identicons}
+            <> {identicons} </>
           </EffectComposer>
 
           {/* Adding orbit controls to navigate the 3D scene */}
