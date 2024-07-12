@@ -17,12 +17,12 @@ Identicons are icons generated based on a unique identifier, commonly used to vi
 - **Consistent Uniqueness:** Guarantee distinctiveness across a wide variety of inputs, minimizing collisions.
 
 ### 3. Appearance
-- **Aesthetics:** Create identicons that are visually appealing and easily recognizable.
+- **Aesthetics:** Create identicons that are visually appealing and easily recognizable through polygonal variety and high quality color palettes.
 - **Consistency:** Maintain a consistent style across all identicons to ensure a cohesive look and feel.
 
 ### 4. Performance and Efficiency
-- **Speed:** Generate identicons quickly and efficiently.
-- **Resource Usage:** Optimize resource usage to ensure optimal performance.
+- **Speed:** Generate identicons quickly and efficiently (ours are created in real-time based on character strings, rendered instantly by the client).
+- **Resource Usage:** We optimize memory and resource usage to ensure optimal performance.
 
 ## Implementation Strategy
 
@@ -69,7 +69,7 @@ Identicons are icons generated based on a unique identifier, commonly used to vi
 1. **Clone the Repository:**
    ```sh
    git clone https://github.com/Caerii/identicon-generator-site.git
-   cd frontend/identicon-generator-site
+   cd identicon-frontend
    ```
 
 2. **Install Dependencies:**

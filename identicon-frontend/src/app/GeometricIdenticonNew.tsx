@@ -3,6 +3,7 @@ import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three-stdlib';
 import { Box3, Vector3, Color, Euler, CylinderGeometry, SphereGeometry, BoxGeometry, ConeGeometry } from 'three';
 import CryptoJS from 'crypto-js';
+import * as THREE from 'three';
 
 interface GeometricIdenticonProps {
   seed: string;
@@ -10,7 +11,7 @@ interface GeometricIdenticonProps {
 
 const GeometricIdenticon: React.FC<GeometricIdenticonProps> = ({ seed }) => {
   const gltf = useLoader(GLTFLoader, './human_head.glb');
-  const materialRef = useRef();
+  const materialRef = useRef<THREE.MeshStandardMaterial | null>(null);
 
   const { color, scale, rotation, cylinderSize, primitives } = useMemo(() => {
     const hash = CryptoJS.SHA256(seed).toString();
