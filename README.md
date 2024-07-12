@@ -101,7 +101,7 @@ Identicons, first introduced by Don Park in 2007, are visual representations of 
 
 ### Our 3D Geometric Approach
 
-Our project takes the concept of identicons into three-dimensional space. Instead of flat, pixel-based images, we generate complex 3D geometric shapes. This approach offers several advantages:
+Our project takes the concept of identicons into three-dimensional space. Instead of flat, pixel-based images, we generate complex 3D geometric shapes. Users will be more impressed with such an approach, depending on the primitives used. We used topological primitives here to make everything reproducible with standard methods. However, future interfaces might allow users to upload their own primitives, or describe it merely in natural language. This approach we use, with real-time 3D offers several advantages:
 
 1. **Increased Uniqueness**: The additional dimension and geometric complexity allow for a vastly larger set of unique identicons.
 2. **Enhanced Memorability**: 3D shapes are often more distinctive and memorable than 2D patterns.
@@ -127,6 +127,18 @@ Our identicon generation system aims to achieve the following objectives:
 4. **Performance and Efficiency**: 
    - **Why**: Quick generation and rendering of identicons is crucial for a smooth user experience, especially when displaying multiple identicons (e.g., in a forum view).
    - **How**: We optimize our 3D rendering using React Three Fiber, implement efficient hash-to-geometry mapping algorithms, and use React's state management for smooth updates.
+
+5. **User Interaction**:
+    - **Why**: Interactive elements increase user engagement and allow for exploration of the 3D identicons.
+    - **How**: We provide rotation controls for users to interact with their identicons, enhancing the overall user experience.
+
+6. **3D Visualization**:
+    - **Why**: 3D identicons offer a modern and visually striking alternative to traditional 2D avatars.
+    - **How**: We leverage Three.js and React Three Fiber to create and render complex 3D geometries in the browser.
+
+7. **Real-World Application**:
+    - **Why**: Demonstrating the practical use of identicons in a forum-like setting provides context for their utility.
+    - **How**: We include a sidebar with predefined users and their associated identicons, showcasing how identicons might be used in a user list.
 
 ## Technical Implementation
 
@@ -210,14 +222,14 @@ const rotation = useMemo(() => new Euler(
 
 - **React**: Chosen for its component-based architecture and efficient rendering through the virtual DOM.
 - **Three.js and React Three Fiber**: Enables complex 3D rendering in the browser with a React-friendly API.
-- **Next.js**: Provides server-side rendering capabilities and optimized production builds.
+- **Next.js**: Provides server-side rendering capabilities and optimized production builds. We didn't implement all of these features in this small project, but they are available for future development.
 - **Tailwind CSS**: Allows for rapid UI development with utility-first CSS.
 
 **Why this stack?**: 
-- React's component model aligns well with our modular identicon generation approach.
-- Three.js is the industry standard for 3D graphics in the browser.
-- Next.js enhances performance and SEO capabilities.
-- Tailwind CSS enables quick styling iterations and maintains a consistent design language.
+- React's component model aligns well with our modular identicon generation approach. We can easily reuse components and manage state.
+- Three.js is the industry standard for 3D graphics in the browser. React Three Fiber makes it easy to integrate Three.js with React.
+- Next.js enhances performance and SEO capabilities. We can easily add server-side rendering and API routes for future enhancements.
+- Tailwind CSS enables quick styling iterations and maintains a consistent design language. It's also easy to customize and extend.
 
 ### Key Components
 
@@ -354,6 +366,7 @@ export const captureIdenticon = (index: number, size: number, canvasRefs: React.
 
 1. **Version Control**: We use Git for version control, with a branching strategy that includes feature branches and pull requests.
 2. **Code Review**: All changes undergo peer review (with or without a human) before merging into the main branch.
+  -> The usage of AI in this project has helped to refine pseudocode into more complex functional components, and greatly accelerates the development process.
 3. **Testing**: In this small application we use manual testing, but in a larger project we would implement unit tests and end-to-end tests.
 4. **Continuous Integration**: We use GitHub Actions for automated testing and deployment.
 
