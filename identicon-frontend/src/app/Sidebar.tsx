@@ -90,7 +90,8 @@ const Sidebar: React.FC<SidebarProps> = ({ forumPosts, rotate, setDropdownVisibl
                 {/* Generate identicon shapes */}
                 {Array.from({ length: amountOfShapes }, (_, j) => (
                   <GeometricIdenticon key={j} seed={generateHash(post.username, j)} rotate={rotate} />
-                )) as React.ReactElement<any, any>}
+                ))}
+
               </EffectComposer>
               <OrbitControls />
             </Canvas>
