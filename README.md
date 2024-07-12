@@ -6,6 +6,15 @@ Author: [Alif Jakir](https://www.alifjakir.com) | [GitHub](https://github.com/Ca
 
 Updated 7/12/24!
 
+The string "wall"
+![The string "wall"](wall.png)
+
+The string "cognition"
+![The string "cognition"](cognition.png)
+
+The string "Jane"
+![The string "Jane"](Jane.png)
+
 ## Table of Contents
 1. [Introduction](#introduction)
    - [Getting Started](#getting-started)
