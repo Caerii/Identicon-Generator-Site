@@ -76,25 +76,26 @@ export default function Home() {
     }
   };
 
-  const generateIdenticons = (username: string) => {
-    return Array.from({ length: 5 }, (_, index) => {
-      const derivedSeed = CryptoJS.SHA256(username + index).toString();
-      return <GeometricIdenticon key={index} seed={derivedSeed} />;
-    });
-  };
+  // const generateIdenticons = (username: string) => {
+  //   return Array.from({ length: 5 }, (_, index) => {
+  //     const derivedSeed = CryptoJS.SHA256(username + index).toString();
+  //     return <GeometricIdenticon key={index} seed={derivedSeed} />;
+  //   });
+  // };
 
-  const renderCanvas = (username: string) => (
-    <Canvas camera={{ position: [5, 5, 5], fov: 30 }}>
-      <EffectComposer>
-        <ambientLight intensity={0.3} />
-        <pointLight position={[10, 10, 10]} />
-        <OrbitControls />
-        {generateIdenticons(username)}
-        <ChromaticAberration offset={[0.005, 0.005]} />
-        <DotScreen scale={2} />
-      </EffectComposer>
-    </Canvas>
-  );
+  // const renderCanvas = (username: string) => (
+  //   <Canvas camera={{ position: [5, 5, 5], fov: 30 }}>
+  //     <EffectComposer>
+  //       <ambientLight intensity={0.3} />
+  //       <pointLight position={[10, 10, 10]} />
+  //       <OrbitControls />
+  //       {generateIdenticons(username)}
+  //       <ChromaticAberration offset={[0.005, 0.005]} />
+  //       <DotScreen scale={2} />
+  //     </EffectComposer>
+  //   </Canvas>
+  // );
+  // Fix for linter later
 
   return (
     <div className="flex">
@@ -104,7 +105,7 @@ export default function Home() {
         {users.map((user, index) => (
           <div key={index} className="mb-4 p-2 border rounded-md flex items-center">
             <div className="w-60 h-100 mr-4">
-              {renderCanvas(user.username)}
+              {/* {renderCanvas(user.username)} */}
             </div>
             <div>
               <p className="text-lg font-bold">{user.username}</p>
@@ -133,7 +134,7 @@ export default function Home() {
             Generate Identicons
           </button>
           <div className="canvas-container mx-auto mt-8 p-4 border-2 border-gray-300">
-            {renderCanvas(inputString)}
+            {/* {renderCanvas(inputString)} */}
           </div>
         </div>
       </div>

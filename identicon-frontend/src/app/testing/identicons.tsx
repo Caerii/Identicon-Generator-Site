@@ -13,9 +13,11 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import GeometricIdenticon from './GeometricIdenticon';
+import GeometricIdenticon from '../GeometricIdenticon';
 import CryptoJS from 'crypto-js';
 import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
+// import vector2
+import { Vector2 } from 'three';
 
 // Predefined list of users to display identicons for
 const users = ["Alice", "Bob", "Charlie", "Diana", "Eve"];
@@ -112,10 +114,10 @@ export default function Home() {
               <Canvas gl={{ preserveDrawingBuffer: true }} camera={{ position: [5, 5, 5], fov: 35 }}>
                 <EffectComposer>
                   <Bloom luminanceThreshold={0.3} luminanceSmoothing={0.75} height={300} />
-                  <ChromaticAberration offset={{ x: 0.02, y: 0.015 }} />
+                  <ChromaticAberration offset={new Vector2(0.005, 0.0015)} radialModulation={false} modulationOffset={0.0} />
                   <ambientLight intensity={3.5} />
                   <pointLight position={[10, 10, 10]} />
-                  {Array.from({ length: 5 }, (_, j) => <GeometricIdenticon key={j} seed={generateHash(post.username, j)} rotate={rotate} />)}
+                  <> {Array.from({ length: 5 }, (_, j) => <GeometricIdenticon key={j} seed={generateHash(post.username, j)} rotate={rotate} />)} </>
                 </EffectComposer>
                 <OrbitControls />
               </Canvas>
@@ -156,10 +158,10 @@ export default function Home() {
           <Canvas gl={{ preserveDrawingBuffer: true }} camera={{ position: [5, 5, 5], fov: 35 }}>
             <EffectComposer>
               <Bloom luminanceThreshold={0.3} luminanceSmoothing={0.75} height={300} />
-              <ChromaticAberration offset={{ x: 0.005, y: 0.0015 }} />
+              <ChromaticAberration offset={new Vector2(0.005, 0.0015)} radialModulation={false} modulationOffset={0.0} />
               <ambientLight intensity={3.5} />
               <pointLight position={[10, 10, 10]} />
-              {identicons}
+              {/* <>{identicons}</> */}
             </EffectComposer>
             <OrbitControls />
           </Canvas>
