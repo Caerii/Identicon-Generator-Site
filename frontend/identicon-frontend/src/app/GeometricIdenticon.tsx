@@ -114,14 +114,14 @@ const GeometricIdenticon = ({ seed, rotate }: { seed: string, rotate: boolean })
 
   // Define possible geometries for the mesh
   const geometries = [
-    <boxGeometry args={[1, 1, 1]} />,  // Cube
-    <sphereGeometry args={[1.5, 32, 32]} />,  // Sphere
-    <coneGeometry args={[0.5, 1, 32]} />,  // Cone
-    <torusKnotGeometry args={[1.5, 0.01, 100, 16]} />,  // Torus Knot
-    <dodecahedronGeometry args={[0.75, 0]} />,  // Dodecahedron
-    <octahedronGeometry args={[0.75, 0]} />,  // Octahedron
-    <tetrahedronGeometry args={[0.75, 0]} />,  // Tetrahedron
-    <boxGeometry args={[1, 1, 1]} />,  // Cube (default)
+    <boxGeometry args={[1, 1, 1]} key="box" />,
+    <sphereGeometry args={[1.5, 32, 32]} key="sphere" />,
+    <coneGeometry args={[0.5, 1, 32]} key="cone" />,
+    <torusKnotGeometry args={[1.5, 0.01, 100, 16]} key="torusKnot" />,
+    <dodecahedronGeometry args={[0.75, 0]} key="dodecahedron" />,
+    <octahedronGeometry args={[0.75, 0]} key="octahedron" />,
+    <tetrahedronGeometry args={[0.75, 0]} key="tetrahedron" />,
+    <boxGeometry args={[1, 1, 1]} key="boxDefault" />,
   ];
 
   // Create material for the mesh with color, wireframe option, and transparency
@@ -136,8 +136,8 @@ const GeometricIdenticon = ({ seed, rotate }: { seed: string, rotate: boolean })
 
   return (
     <mesh ref={ref} position={position} scale={scale} rotation={rotation}>
-      {geometries[typeIndex] || geometries[0]}  // Select geometry based on type index
-      {material}  // Apply the material
+      {geometries[typeIndex] || geometries[0]}  {/* Select geometry based on type index */}
+      {material}  {/* Apply the material */}
     </mesh>
   );
 };
