@@ -79,7 +79,7 @@ const GeometricIdenticon: React.FC<GeometricIdenticonProps> = ({ seed }) => {
   }, [color]);
 
   // Function to create geometry based on type
-  const createGeometry = (type, args) => {
+  const createGeometry = (type: number, args: any[]) => {
     switch (type) {
       case 0: return new SphereGeometry(...args);
       case 1: return new BoxGeometry(...args);
