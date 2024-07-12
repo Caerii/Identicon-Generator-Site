@@ -1,52 +1,94 @@
 # Identicon Generator Site
- Creating identicons automatically!
 
-# What is an Identicon?
+Creating unique, visually appealing identicons automatically!
 
-Identicons are icons that are generated based on a unique identifier. They are often used in applications to visually represent a user's identity. Identicons are generated based on a hash of the unique identifier, which ensures that the same identifier will always produce the same identicon.
+## What is an Identicon?
 
-# The objectives of our Identicons:
+Identicons are icons generated based on a unique identifier, commonly used to visually represent a user's identity in applications. By hashing a unique identifier, such as a username or email, identicons ensure that the same identifier always produces the same icon, providing a consistent visual identity.
 
-1. Legibility at Various Scales:
-- Scalability: Ensure identicons are clear and recognizable at different sizes (e.g., 32x32, 64x64, 128x128).
-- Contrast: High contrast between elements to maintain clarity when scaled down.
+## Objectives of Our Identicons:
 
-2. Uniqueness vs Similarity:
-- Differentiation: Slight variations in strings should result in noticeably different identicons.
-- Consistent Uniqueness: Ensure distinctiveness for a wide variety of inputs, minimizing collisions.
+### 1. Legibility at Various Scales
+- **Scalability:** Ensure identicons remain clear and recognizable at different sizes (e.g., 32x32, 64x64, 128x128).
+- **Contrast:** Maintain high contrast between elements to ensure clarity, even when scaled down.
 
-3. Appearance:
-- Aesthetics: Identicons should be visually appealing and easy to recognize.
-- Consistency: Maintain a consistent style across all identicons.
+### 2. Uniqueness vs. Similarity
+- **Differentiation:** Ensure that slight variations in strings result in noticeably different identicons.
+- **Consistent Uniqueness:** Guarantee distinctiveness across a wide variety of inputs, minimizing collisions.
 
-4. Performance and Efficiency:
-- Speed: Generate identicons quickly and efficiently.
-- Resource Usage: Minimize resource usage to ensure optimal performance.
+### 3. Appearance
+- **Aesthetics:** Create identicons that are visually appealing and easily recognizable.
+- **Consistency:** Maintain a consistent style across all identicons to ensure a cohesive look and feel.
 
-Implementation Strategy
+### 4. Performance and Efficiency
+- **Speed:** Generate identicons quickly and efficiently.
+- **Resource Usage:** Optimize resource usage to ensure optimal performance.
 
-1. Algorithm Design:
-- Hash Function: Use a robust hashing algorithm to convert strings into numerical values.
-- Pattern Generation: Design an algorithm to convert hash values into visual patterns.
-- Color Scheme: Develop a palette generator based on hash values to ensure diverse yet aesthetically pleasing colors.
-2. Technology Stack:
-- Frontend: Use Next.js for server-side rendering and React for the dynamic generation of identicons.
-- Backend: Utilize Python for the core logic of identicon generation.
-- Deployment: Deploy the solution on AWS using services like Lambda for the backend logic and S3 for storage.
-3. Development Steps:
-- Hashing and Pattern Algorithm:
-Write a hashing function in Python.
-Develop a pattern generation algorithm that translates hash outputs to visual elements.
-- Color Generation:
-Create a function to map hash values to color schemes.
-- Next.js Integration:
-Set up a Next.js project.
-Integrate a Python API (using Flask or FastAPI) for generating identicons.
-Use a canvas element in React to draw identicons dynamically.
+## Implementation Strategy
 
-- Testing and Validation:
-Test for uniqueness and aesthetic quality.
-Implement unit tests and visual checks.
+### 1. Algorithm Design
+- **Hash Function:** Use a robust hashing algorithm (SHA-256) to convert strings into numerical values.
+- **Pattern Generation:** Develop an algorithm to translate hash values into distinct geometric shapes and patterns.
+- **Color Scheme:** Implement a palette generator based on hash values to produce diverse yet aesthetically pleasing colors.
 
-# TODO:
-- The identicons need to have a border on their container
+### 2. Technology Stack
+- **Frontend:** Utilize React for dynamic identicon generation and Three.js for 3D rendering.
+- **Deployment:** Deploy the solution on a platform like AWS Amplify.
+
+### 3. Development Steps
+- **Hashing and Pattern Algorithm:**
+  - Implement the SHA-256 hashing function in JavaScript.
+  - Develop a pattern generation algorithm that converts hash outputs to visual elements using Three.js.
+- **Color Generation:**
+  - Create a function that maps hash values to HSL color schemes.
+- **React Integration:**
+  - Set up a React project.
+  - Use a canvas element with React Three Fiber to dynamically draw identicons.
+- **Testing and Validation:**
+  - Test for uniqueness and aesthetic quality.
+  - Implement unit tests and visual checks to ensure consistency and performance.
+
+## Features
+
+- **Dynamic Identicon Generation:** Users can generate identicons on-the-fly by entering a unique string.
+- **Predefined Users:** Display identicons for a list of predefined users with sample forum posts to demonstrate usage.
+- **Visual Effects:** Enhance identicons with visual effects like Bloom and Chromatic Aberration for a polished look.
+- **Interactive 3D View:** Use OrbitControls to allow users to interact with and view identicons from different angles.
+
+## TODO
+- **Download Identicons as Images:** Implement functionality to download identicons as images [Issue #3].
+
+## Example Usage
+
+1. **Generate Identicons:** Users enter a string to generate a unique identicon based on the SHA-256 hash of the input.
+2. **View Forum Posts:** Display identicons for predefined users, each accompanied by a realistic forum post.
+3. **Interactivity:** Users can interact with identicons using OrbitControls for an immersive experience.
+
+## Getting Started
+
+1. **Clone the Repository:**
+   ```sh
+   git clone https://github.com/Caerii/identicon-generator-site.git
+   cd frontend/identicon-generator-site
+   ```
+
+2. **Install Dependencies:**
+   ```sh
+   npm install
+   ```
+
+3. **Run the Development Server:**
+   ```sh
+   npm run dev
+   ```
+
+4. **Open Your Browser:**
+   Navigate to `http://localhost:3000` to view the identicon generator in action.
+
+## Contributing
+
+We welcome contributions to improve the Identicon Generator Site. Feel free to open issues and submit pull requests.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

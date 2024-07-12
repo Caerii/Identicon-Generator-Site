@@ -26,6 +26,9 @@
   --neutral-color: #F0F0F0;
   --neutral-hover-color: #E0E0E0;
   --border-radius: 12px;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-hover-color: rgba(0, 0, 0, 0.2);
+  --transition-speed: 0.3s;
 }
 
 /* Dark mode theme adjustments */
@@ -45,12 +48,14 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  background-color: var(--neutral-color);
-  color: #333;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background: linear-gradient(to bottom right, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
+  color: rgb(var(--foreground-rgb));
   display: grid;
   grid-template-columns: 1fr;
   height: 100vh;
+  overflow: hidden;
+  transition: background var(--transition-speed), color var(--transition-speed);
 }
 
 /* ========================================================= */
@@ -61,13 +66,19 @@ input, button {
   padding: 10px 16px;
   font-size: 16px;
   border-radius: var(--border-radius);
-  transition: all 0.3s ease;
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
-/* Input styles */
 input {
   border: 1px solid #ccc;
   width: calc(100% - 32px); /* Adjust for padding */
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 8px var(--shadow-hover-color);
 }
 
 /* Button styles */
@@ -76,17 +87,18 @@ button {
   background-color: var(--primary-color);
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
 }
 
-/* Button hover and active states */
 button:hover {
   background-color: var(--primary-hover-color);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--shadow-hover-color);
 }
 
 button:active {
   transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 /* Secondary button styles */
@@ -96,6 +108,8 @@ button:active {
 
 .secondary-button:hover {
   background-color: var(--secondary-hover-color);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--shadow-hover-color);
 }
 
 /* Neutral button styles */
@@ -106,6 +120,8 @@ button:active {
 
 .neutral-button:hover {
   background-color: var(--neutral-hover-color);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--shadow-hover-color);
 }
 
 /* ========================================================= */
@@ -125,6 +141,7 @@ button:active {
   background-color: var(--neutral-hover-color);
   padding: 20px;
   border-right: 2px solid var(--primary-color);
+  box-shadow: inset 0 0 10px var(--shadow-color);
 }
 
 /* Main content area styles in grid layout */
@@ -179,6 +196,8 @@ button:active {
   width: 450px;
   overflow: hidden;
   border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 /* Forum identicon container styles */
@@ -193,6 +212,7 @@ button:active {
   margin: auto;  /* Center the container horizontally */
   padding: 4px;  /* Padding to ensure contents do not touch the edges */
   border-radius: var(--border-radius); /* Utilize the border-radius variable for consistency */
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 /* Dropdown menu styles */
@@ -203,6 +223,7 @@ button:active {
   z-index: 10;  /* Ensures dropdown is on top */
   width: 100%;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: var(--border-radius);
 }
 
 /* Forum post container styles */
@@ -211,6 +232,9 @@ button:active {
   grid-template-columns: 1fr 2fr;  /* Divides the space between identicon and text */
   gap: 10px;
   align-items: center;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 /* Main identicon actions container styles */
@@ -219,6 +243,7 @@ button:active {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  border-radius: var(--border-radius);
 }
 
 /* ========================================================= */
@@ -227,14 +252,16 @@ button:active {
 
 button {
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
   background-color: var(--primary-color);
   color: white;
   padding: 5px 10px;
   margin-left: 10px;
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 button:hover, button:focus {
   background-color: var(--primary-hover-color);
   transform: scale(1.05); /* Slight increase to emphasize hover state */
+  box-shadow: 0 8px 16px var(--shadow-hover-color);
 }

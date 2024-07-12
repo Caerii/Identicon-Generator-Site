@@ -1,163 +1,143 @@
 /**
- * `GeometricIdenticon` is a functional React component that creates a 3D identicon based on a cryptographic seed.
- * The component utilizes several useMemo hooks to compute properties like position, scale, and color based on the seed,
- * ensuring that each identicon is unique and reproducibly generated from its input seed.
- *
- * This component illustrates an advanced use-case of cryptographic functions to drive aesthetic variations in 3D models,
- * making extensive use of three.js geometries to represent different possible identicon shapes. It also demonstrates the
- * use of React hooks to optimize computation-intensive tasks in a 3D rendering context.
- *
- * The generated identicon is a visual representation of the cryptographic seed, featuring unique properties such as
- * geometry, position, scale, color, and rotation. These properties are derived from the cryptographic hash of the seed,
- * ensuring consistency and uniqueness for each distinct seed value.
- *
- * @module GeometricIdenticon
- * @param {GeometricIdenticonProps} props - The properties required by the component, primarily the cryptographic seed.
- * @param {string} props.seed - The cryptographic seed used to generate the identicon's unique properties.
+ * GeometricIdenticon.tsx
+ * 
+ * This file defines the GeometricIdenticon component, which generates a unique 3D geometric identicon based on a given seed string. The identicon's properties, including geometry, color, position, scale, and rotation, are derived from the SHA-256 hash of the seed string. The component leverages React and Three.js to render the 3D shape and applies dynamic transformations to create visually distinct identicons.
+ * 
+ * Created by Alif Jakir on 7/11/24
+ * Contact: alif@halcyox.com
  */
 
 import React, { useMemo, useRef } from 'react';
 import { Vector3, Euler } from 'three';
 import CryptoJS from 'crypto-js';
-import { useFrame, useLoader } from '@react-three/fiber';
-
-interface GeometricIdenticonProps {
-  seed: string;
-}
+import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 
 /**
- * Generates a SHA256 hash from the provided input string. This cryptographic hash function
- * serves as the foundation for deriving all other properties of the 3D identicon. By generating
- * a hash from the seed, we ensure that the identicon's properties are both unique and reproducible
- * for any given seed.
- *
- * @param {string} inputString - The input string used to generate the hash.
- * @returns {string} - A hexadecimal string representing the SHA256 hash of the input string.
+ * Generates a SHA-256 hash for the given input string.
+ * 
+ * The SHA-256 hash algorithm is used for its strong cryptographic properties, ensuring that the resulting hash is unique and changes significantly with small variations in the input string. This property is crucial for generating distinct identicons.
+ * 
+ * @param {string} inputString - The input string to be hashed.
+ * @returns {string} The SHA-256 hash of the input string.
  */
-const generateHash = (inputString: string): string => {
-  return CryptoJS.SHA256(inputString).toString();
-};
+const generateHash = (inputString: string) => CryptoJS.SHA256(inputString).toString();
 
 /**
- * Derives a numerical value from a specific segment of a hash. This function is crucial for translating
- * the hash into specific visual or geometric characteristics of an identicon. By slicing a segment of the
- * hash and converting it to a numerical value, we can map this value to a range suitable for positioning,
- * scaling, and coloring the identicon's elements.
- *
- * @param {string} hash - The cryptographic hash from which to derive the value.
- * @param {number} index - The index indicating which segment of the hash to use. This allows for multiple distinct values to be derived from a single hash.
- * @param {number} range - The maximum range to which the resulting value should be scaled, ensuring the value falls within a desired interval.
- * @returns {number} - A scaled number derived from the hash, used for property computation such as position, scale, and color.
+ * Generates a random value within a given range based on the hash and index.
+ * 
+ * This function extracts a segment of the hash string, converts it to a decimal value, and scales it to the specified range. The index determines which part of the hash is used, ensuring different properties for different parts of the identicon.
+ * 
+ * @param {string} hash - The hash string.
+ * @param {number} index - The index to extract the value from the hash.
+ * @param {number} range - The range of the random value.
+ * @returns {number} A random value within the specified range.
  */
-const getRandomValue = (hash: string, index: number, range: number): number => {
-  const hashIndex = index % (hash.length / 2);
-  return (parseInt(hash.slice(hashIndex * 2, hashIndex * 2 + 2), 16) / 255) * range;
-};
+const getRandomValue = (hash: string, index: number, range: number) => 
+  (parseInt(hash.slice((index % (hash.length / 2)) * 2, (index % (hash.length / 2)) * 2 + 2), 16) / 255) * range;
 
 /**
- * Defines the specific color scheme for the identicon. It selects colors based on predefined ranges,
- * ensuring a consistent palette.
- *
- * @param {string} hash - The cryptographic hash from which to derive the color.
- * @param {number} index - The index indicating which segment of the hash to use.
- * @returns {string} - A color string in HSL format.
+ * Generates a color in HSL format based on the hash and index.
+ * 
+ * The color is derived from the hash to ensure consistency with other properties of the identicon. HSL format is used for easy manipulation of hue, saturation, and lightness.
+ * 
+ * @param {string} hash - The hash string.
+ * @param {number} index - The index to extract the color from the hash.
+ * @returns {string} A color in HSL format.
  */
-const getColorFromHash = (hash: string, index: number): string => {
-  const hue = getRandomValue(hash, index, 360);
-  // Define fixed saturation and lightness for the color scheme
-  const saturation = 70; // 70% saturation
-  const lightness = 50; // 50% lightness
-  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-};
+const getColorFromHash = (hash: string, index: number) => `hsl(${getRandomValue(hash, index, 360)}, 70%, 50%)`;
 
 /**
- * `GeometricIdenticon` is the main component that renders the 3D identicon. It calculates the identicon's properties
- * using the provided cryptographic seed. The properties include the identicon's position, scale, color, rotation, and
- * geometry type. Each property is derived from a segment of the SHA256 hash of the seed, ensuring that the identicon is
- * unique for each seed and reproducible for the same seed.
- *
- * @param {GeometricIdenticonProps} props - The properties required by the component, primarily the cryptographic seed.
- * @returns {JSX.Element} - The rendered 3D identicon mesh.
+ * GeometricIdenticon Component
+ * 
+ * This component creates a 3D mesh object whose properties are determined by a hashed seed.
+ * It generates a unique geometric shape with position, scale, color, and rotation derived from the seed.
+ * 
+ * @param {Object} props - The component props.
+ * @param {string} props.seed - The seed string used to generate the identicon.
+ * @param {boolean} props.rotate - Flag indicating whether the mesh should rotate.
+ * @returns {JSX.Element} The rendered GeometricIdenticon component.
  */
-const GeometricIdenticon: React.FC<GeometricIdenticonProps> = ({ seed }) => {
-  // Generates a stable hash from the seed. This hash serves as the basis for all other property calculations.
+const GeometricIdenticon = ({ seed, rotate }: { seed: string, rotate: boolean }) => {
+  // Generate hash from the seed string
   const hash = useMemo(() => generateHash(seed), [seed]);
 
-  // Calculates the position of the identicon in 3D space. The position is determined by deriving three values from the hash,
-  // each mapped to a range from -5 to 5.
+  // Determine the position of the mesh based on the hash
   const position = useMemo(() => new Vector3(
-    getRandomValue(hash, 1, 5) - 5,
-    getRandomValue(hash, 2, 5) - 5,
-    getRandomValue(hash, 3, 5) - 5
+    getRandomValue(hash, 1, 10) - 5,  // X position between -5 and 5
+    getRandomValue(hash, 2, 10) - 5,  // Y position between -5 and 5
+    getRandomValue(hash, 3, 10) - 5   // Z position between -5 and 5
   ), [hash]);
 
-  // Determines the type of geometry to render based on a value derived from the hash. The typeIndex ensures a varied and
-  // unpredictable selection of geometry types, adding to the visual diversity of the identicon.
+  // Determine the type of geometry to use based on the hash
   const typeIndex = useMemo(() => Math.floor(getRandomValue(hash, 0, 7)), [hash]);
 
-  // Calculates the scale of the identicon. Each dimension (x, y, z) is scaled independently, resulting in potentially
-  // asymmetric shapes. The scale values are derived from the hash and mapped to a range from 0.5 to 2.5.
+  // Determine the scale of the mesh based on the hash
   const scale = useMemo(() => new Vector3(
-    getRandomValue(hash, 4, 2) + 0.5,
-    getRandomValue(hash, 5, 2) + 0.5,
-    getRandomValue(hash, 6, 2) + 0.5
+    getRandomValue(hash, 4, 2) + 0.5,  // X scale between 0.5 and 2.5
+    getRandomValue(hash, 5, 2) + 0.5,  // Y scale between 0.5 and 2.5
+    getRandomValue(hash, 6, 2) + 0.5   // Z scale between 0.5 and 2.5
   ), [hash]);
 
-  // Derives the color of the identicon using a constrained color scheme.
+  // Determine the color of the mesh based on the hash
   const color = useMemo(() => getColorFromHash(hash, 7), [hash]);
 
-  // Determines the rotation of the identicon. The rotation is represented by Euler angles (in radians) for the x, y, and z axes.
-  // Each angle is derived from the hash and mapped to a range from 0 to 2π, allowing for full rotational freedom.
+  // Determine the rotation of the mesh based on the hash
   const rotation = useMemo(() => new Euler(
-    getRandomValue(hash, 8, Math.PI * 2),
-    getRandomValue(hash, 9, Math.PI * 2),
-    getRandomValue(hash, 10, Math.PI * 2)
+    getRandomValue(hash, 8, Math.PI * 2),  // X rotation between 0 and 2π
+    getRandomValue(hash, 9, Math.PI * 2),  // Y rotation between 0 and 2π
+    getRandomValue(hash, 10, Math.PI * 2)  // Z rotation between 0 and 2π
   ), [hash]);
 
-  // A React ref used to attach to the rendered mesh. This ref can be used for future dynamic modifications or animations.
+  // Reference to the mesh object for updating its rotation over time
   const ref = useRef<THREE.Mesh>(null);
 
-  // Add an animation to make the identicon spin with a specific pattern
-  // useFrame(({ clock }) => {
-  //   if (ref.current) {
-  //     const time = clock.getElapsedTime();
-  //     ref.current.rotation.x = rotation.x + Math.sin(time) * 0.15; // Adjust the factor to control speed
-  //     ref.current.rotation.y = rotation.y + Math.sin(time / 1.5) * 0.2; // Adjust the divisor to create a staggered effect
-  //     ref.current.rotation.z = rotation.z + Math.sin(time / 2) * 0.2; // Adjust the divisor to create a staggered effect
-  //   }
-  // });
-
-  // Determines which type of three.js geometry to render based on the typeIndex. This adds variety to the identicons
-  // by selecting different geometric shapes such as boxes, spheres, cones, etc.
-  const geometry = useMemo(() => {
-    switch (typeIndex) {
-      case 0: return <boxGeometry args={[1, 1, 1]} />;
-      case 1: return <sphereGeometry args={[1.5, 32, 32]} />;
-      case 2: return <coneGeometry args={[0.5, 1, 32]} />;
-      case 3: return <torusKnotGeometry args={[1.5, 0.01, 100, 16]} />;
-      case 4: return <dodecahedronGeometry args={[0.75, 0]} />;
-      case 5: return <octahedronGeometry args={[0.75, 0]} />;
-      case 6: return <tetrahedronGeometry args={[0.75, 0]} />;
-      default: return <boxGeometry args={[1, 1, 1]} />;
+  /**
+   * useFrame hook to update the rotation of the mesh on each frame.
+   * 
+   * This hook ensures that the mesh rotates smoothly over time when the rotate flag is true.
+   * It uses the elapsed time to calculate the new rotation values.
+   * 
+   * @param {Object} state - The state object provided by the useFrame hook.
+   * @param {Object} state.clock - The clock object to get the elapsed time.
+   */
+  useFrame(({ clock }) => {
+    if (ref.current && rotate) {
+      const time = clock.getElapsedTime();
+      ref.current.rotation.set(
+        rotation.x + Math.sin(time) * 0.15,
+        rotation.y + Math.sin(time / 1.5) * 0.2,
+        rotation.z + Math.sin(time / 2) * 0.2
+      );
     }
-  }, [typeIndex]);
+  });
 
-  // Creates a material for the identicon. The material's color and wireframe properties are derived from the hash,
-  // adding to the visual uniqueness. The opacity is also varied to create different levels of transparency.
+  // Define possible geometries for the mesh
+  const geometries = [
+    <boxGeometry args={[1, 1, 1]} />,  // Cube
+    <sphereGeometry args={[1.5, 32, 32]} />,  // Sphere
+    <coneGeometry args={[0.5, 1, 32]} />,  // Cone
+    <torusKnotGeometry args={[1.5, 0.01, 100, 16]} />,  // Torus Knot
+    <dodecahedronGeometry args={[0.75, 0]} />,  // Dodecahedron
+    <octahedronGeometry args={[0.75, 0]} />,  // Octahedron
+    <tetrahedronGeometry args={[0.75, 0]} />,  // Tetrahedron
+    <boxGeometry args={[1, 1, 1]} />,  // Cube (default)
+  ];
+
+  // Create material for the mesh with color, wireframe option, and transparency
   const material = useMemo(() => (
     <meshStandardMaterial 
       color={color} 
-      wireframe={typeIndex % 2 === 0} 
+      wireframe={typeIndex % 2 === 0}  // Wireframe for even type indices
       transparent 
-      opacity={0.5 + getRandomValue(hash, 11, 0.5)} 
+      opacity={0.5 + getRandomValue(hash, 11, 0.5)}  // Semi-transparent material
     />
   ), [color, typeIndex, hash]);
 
-  // The rendered 3D mesh, applying all the calculated properties and attaching the selected geometry and material.
   return (
     <mesh ref={ref} position={position} scale={scale} rotation={rotation}>
-      {geometry}
-      {material}
+      {geometries[typeIndex] || geometries[0]}  // Select geometry based on type index
+      {material}  // Apply the material
     </mesh>
   );
 };
