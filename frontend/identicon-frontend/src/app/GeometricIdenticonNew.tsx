@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { GLTFLoader } from 'three-stdlib';
 import { Box3, Vector3, Color, Euler, CylinderGeometry, SphereGeometry, BoxGeometry, ConeGeometry } from 'three';
 import CryptoJS from 'crypto-js';
 
