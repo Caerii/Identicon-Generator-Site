@@ -1,11 +1,13 @@
 /**
  * MainContext.tsx
  * 
- * @file This file defines the MainContent component, which serves as the primary interface for the 3D Geometric Identicon Generator application. The component allows users to input a string, generate a unique 3D identicon based on the SHA-256 hash of the string, control the rotation of the identicons, select the size of the identicons, and download the generated identicons as PNG files.
+ * This file defines the MainContent component, which serves as the primary interface for the 3D Geometric Identicon Generator application. 
+ * The component allows users to input a string, generate a unique 3D identicon based on the SHA-256 hash of the string, control the rotation of the identicons, 
+ * select the size of the identicons, and download the generated identicons as PNG files.
  * 
- * @version 1.0.0
- * @date 07/12/24
- * @contact alif@halcyox.com
+ * Created by Alif Jakir on 7/11/24
+ * Updated by Alif Jakir on 7/12/24
+ * Contact: alif@halcyox.com
  */
 
 import { Canvas } from '@react-three/fiber';

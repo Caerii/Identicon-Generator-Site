@@ -1,3 +1,12 @@
+/* utils.tsx
+ *
+ * This file contains utility functions used throughout the project.
+ *
+ * Created by Alif Jakir on 7/11/24
+ * Updated by Alif Jakir on 7/12/24
+ * Contact: alif@halcyox.com
+*/
+
 import CryptoJS from 'crypto-js';
 
 /**
