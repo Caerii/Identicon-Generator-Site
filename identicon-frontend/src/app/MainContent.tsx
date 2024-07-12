@@ -91,6 +91,8 @@ const MainContent: React.FC<MainContentProps> = ({
     <div className="w-33/4 p-4 text-center mt-12">
       <h1 className="text-4xl mb-4">3D Geometric Identicon Generator</h1>
       <p className="text-lg mb-4">The identicons below are generated using the SHA-256 hashing algorithm.</p>
+      <p className="text-lg mb-4">I am using the <a href="https://github.com/pmndrs/react-three-fiber" className="text-blue-500">react-three-fiber</a> library.</p>
+      <p className="text-lg mb-4"><a href="https://github.com/Caerii/Identicon-Generator-Site" className="text-blue-500">My Github :0</a> | <a href="https://www.alifjakir.com" className="text-blue-500">My Unfinished Website</a></p>
 
       {/* Input field for entering the string to generate identicons */}
       <input
