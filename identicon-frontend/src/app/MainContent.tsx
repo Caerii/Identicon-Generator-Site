@@ -127,7 +127,7 @@ const MainContent: React.FC<MainContentProps> = ({
       </button>
 
       {/* Container for the 3D canvas */}
-      <div className="canvas-container mx-auto mt-8 p-4 border-2 border-gray-300 rounded-lg" ref={el => (canvasRefs.current[canvasRefs.current.length] = el)}>
+      <div className="canvas-container mx-auto mt-8 p-4 border-2 border-gray-300 rounded-lg" ref={el => { canvasRefs.current[canvasRefs.current.length] = el; }} >
         <Canvas gl={{ preserveDrawingBuffer: true }} camera={{ position: [5, 5, 5], fov: 35 }}>
           {/* Adding postprocessing effects for enhanced visual quality */}
           <EffectComposer>
