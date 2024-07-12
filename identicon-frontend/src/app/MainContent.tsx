@@ -14,6 +14,7 @@ import { OrbitControls } from '@react-three/drei';
 import GeometricIdenticon from './GeometricIdenticon';
 import { useMemo, useState, ChangeEvent } from 'react';
 import { generateHash, captureIdenticon } from './utils';
+import { Vector2 } from 'three';
 
 /**
  * Prop types for MainContent component.
@@ -132,7 +133,7 @@ const MainContent: React.FC<MainContentProps> = ({
           {/* Adding postprocessing effects for enhanced visual quality */}
           <EffectComposer>
             <Bloom luminanceThreshold={0.3} luminanceSmoothing={0.75} height={300} />
-            <ChromaticAberration offset={{ x: 0.005, y: 0.0015 }} />
+            <ChromaticAberration offset={new Vector2(0.005, 0.0015)} radialModulation={false} modulationOffset={0.0} />
             <ambientLight intensity={3.5} />
             <pointLight position={[10, 10, 10]} />
             {identicons}
